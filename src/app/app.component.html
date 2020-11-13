@@ -1,0 +1,100 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label for="firstName">First name</label>
+            <input
+              type="text"
+              id="firstName"
+              formControlName="firstName"
+              class="form-control">
+            <span
+              *ngIf="!signupForm.get('firstName').valid && signupForm.get('firstName').touched"
+              class="help-block">
+              <span *ngIf="signupForm.get('firstName').errors['required']">This field is required!</span>
+            </span>
+          </div>
+          <div class="form-group">
+            <label for="lastName">Last name</label>
+            <input
+              type="text"
+              id="lastName"
+              formControlName="lastName"
+              class="form-control">
+            <span
+              *ngIf="!signupForm.get('lastName').valid && signupForm.get('lastName').touched"
+              class="help-block">
+              <span *ngIf="signupForm.get('lastName').errors['required']">This field is required!</span>
+            </span>
+          </div>
+          <div class="form-group">
+            <label for="patronymicName">Patronymic name</label>
+            <input
+              type="text"
+              id="patronymicName"
+              formControlName="patronymicName"
+              class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="email">Mail</label>
+            <input
+              type="text"
+              id="email"
+              formControlName="email"
+              class="form-control">
+            <span
+              *ngIf="!signupForm.get('email').valid && signupForm.get('email').touched"
+              class="help-block">Please enter a valid email!</span>
+          </div>
+          <div formGroupName="passwordData">
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input
+                type="password"
+                id="password"
+                formControlName="password"
+                class="form-control">
+             <span
+                *ngIf="!signupForm.get('passwordData.password').valid && signupForm.get('passwordData.password').touched"
+                class="help-block">
+                  <span *ngIf="signupForm.get('passwordData.password').errors['required']">This field is required!</span>
+                  <span *ngIf="signupForm.get('passwordData.password').errors['minlength']">Password must consist of at least 4 symbols!</span>
+              </span>
+          </div>
+          <div class="form-group">
+              <label for="passwordConfirmation">Confirm the password</label>
+              <input
+                type="password"
+                id="passwordConfirmation"
+                formControlName="passwordConfirmation"
+                class="form-control">
+              <span
+                *ngIf="!signupForm.get('passwordData.passwordConfirmation').valid && signupForm.get('passwordData.passwordConfirmation').touched"
+                class="help-block">
+                <span *ngIf="
+                  signupForm.get('passwordData.passwordConfirmation').errors['required'] 
+                  && !signupForm.get('passwordData.passwordConfirmation').errors['isPasswordNotConfirmed']">
+                  This field is required!
+                  </span>
+                <span *ngIf="signupForm.get('passwordData.passwordConfirmation').errors['isPasswordNotConfirmed']">Passwords must match!</span>
+              </span>
+          </div>
+        </div>
+        
+        <button class="btn btn-primary" [disabled]="!signupForm.valid" type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+  <hr>
+  <div class="row" *ngIf="isSubmitted">
+    <div class="col-xs-12">
+      <h3>Your Data</h3>
+      <p>
+        Name: {{ user.firstName + " " + user.patronymicName + (user.patronymicName ? " " : "")  + user.lastName }}
+      </p>
+      <p>Mail: {{ user.email }}</p>
+      <p>Password: {{ user.password }}</p>
+    </div>
+  </div>
+</div>
